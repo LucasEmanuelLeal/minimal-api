@@ -21,7 +21,7 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
-        key = Configuration?.GetSection("Jwt")?.ToString() ?? "";
+        key = Configuration["Jwt"] ?? "";
     }
 
     private string key = "";
@@ -165,7 +165,7 @@ public class Startup
             .RequireAuthorization(new AuthorizeAttribute { Roles = "Adm" })
             .WithTags("Administradores");
 
-            endpoints.MapGet("/Administradores/{id}", ([FromRoute] int id, IAdministradorServico administradorServico) => {
+            endpoints.MapGet("/administradores/{id}", ([FromRoute] int id, IAdministradorServico administradorServico) => {
                 var administrador = administradorServico.BuscaPorId(id);
                 if(administrador == null) return Results.NotFound();
                 return Results.Ok(new AdministradorModelView{
@@ -250,8 +250,8 @@ public class Startup
             .RequireAuthorization(new AuthorizeAttribute { Roles = "Adm,Editor" })
             .WithTags("Veiculos");
 
-            endpoints.MapGet("/veiculos", ([FromQuery] int? pagina, IVeiculoServico veiculoServico) => {
-                var veiculos = veiculoServico.Todos(pagina);
+            endpoints.MapGet("/veiculos", ([FromQuery] int? pagina, [FromQuery] string? nome, [FromQuery] string? marca, IVeiculoServico veiculoServico) => {
+                var veiculos = veiculoServico.Todos(pagina, nome, marca);
 
                 return Results.Ok(veiculos);
             }).RequireAuthorization().WithTags("Veiculos");

@@ -104,3 +104,25 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,dotnetcore,visualstudiocode
+
+### Project Specific ###
+# Sensitive configuration files
+appsettings.Development.json
+appsettings.Production.json
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+*.dump.sql
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio files
+.vs/
+*.suo
+*.userosscache
+*.sln.docstates

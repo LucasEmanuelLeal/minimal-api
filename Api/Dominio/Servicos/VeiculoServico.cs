@@ -42,7 +42,12 @@ public class VeiculoServico : IVeiculoServico
         var query = _contexto.Veiculos.AsQueryable();
         if(!string.IsNullOrEmpty(nome))
         {
-            query = query.Where(v => EF.Functions.Like(v.Nome.ToLower(), $"%{nome}%"));
+            query = query.Where(v => v.Nome.ToLower().Contains(nome.ToLower()));
+        }
+
+        if(!string.IsNullOrEmpty(marca))
+        {
+            query = query.Where(v => v.Marca.ToLower().Contains(marca.ToLower()));
         }
 
         int itensPorPagina = 10;
